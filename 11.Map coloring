@@ -1,0 +1,51 @@
+regions = ['WA', 'NT', 'SA', 'QLD', 'NSW', 'VIC', 'TAS']
+colors = ['Red', 'Green', 'Blue']
+neighbors = {
+    'WA': ['NT', 'SA'],
+    'NT': ['WA', 'SA', 'QLD'],
+    'SA': ['WA', 'NT', 'QLD', 'NSW', 'VIC'],
+    'QLD': ['NT', 'SA', 'NSW'],
+    'NSW': ['SA', 'QLD', 'VIC'],
+    'VIC': ['SA', 'NSW', 'TAS'],
+    'TAS': ['VIC']
+}
+
+assignments = {}
+
+
+region_index = 0
+found_solution = False
+
+while not found_solution and region_index < len(regions):
+    current_region = regions[region_index]
+    
+
+    for color in colors:
+        assignments[current_region] = color
+        
+
+        valid_assignment = True
+        for region, color in assignments.items():
+            for neighbor in neighbors[region]:
+                if assignments.get(neighbor) == color:
+                    valid_assignment = False
+                    break
+            if not valid_assignment:
+                break
+        if valid_assignment:
+
+            region_index += 1
+            if region_index == len(regions):
+
+                found_solution = True
+                break
+            else:
+
+                break
+        else:
+
+            del assignments[current_region]
+
+if found_solution:
+    print("Solution found:")
+    print(assignments)
